@@ -1,4 +1,4 @@
-# OI / Algorithm Practice Repository
+# Algorithm Practice Repository
 
 This repository contains personal problem-solving code, notes, and LaTeX writeups created during algorithm and competitive programming practice.
 
