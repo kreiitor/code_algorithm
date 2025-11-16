@@ -1,0 +1,23 @@
+# --- C++ build artifacts ---
+*.exe
+*.out
+*.o
+*.obj
+
+# --- LaTeX intermediate files ---
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.out
+
+# --- Editor and system files ---
+.vscode/
+Thumbs.db
+.DS_Store
+
+# --- Latexmk build directories (optional) ---
+latex/build/
+latex/output/
