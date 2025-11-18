@@ -16,11 +16,32 @@ OK
 #include<iostream>
 #include<string>
 #include<vector>
+#include<cmath>
 
 using namespace std;
 
+bool is_prime(int n){
+    n = abs(n);
+    for(int i=2;i<int(sqrt(n))+1;i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
 int main()
 {
-    
+    int x,y;
+    while(cin >> x >> y){
+        if(x==0 && y==0) continue;
+        bool flag = true;
+        for(int i=x;i<=y;i++){
+            if(!is_prime(i*i+i+41)){
+                flag = false;
+                break;
+            }
+        }
+        if(flag) cout << "OK" << endl;
+        else cout << "Sorry" << endl;
+    }
     return 0;
 }
