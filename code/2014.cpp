@@ -14,25 +14,17 @@ Sample Output  示例输出
  
 */
 #include<iostream>
-#include<string>
-#include<vector>
-#include<sstream>
 #include<iomanip>
 
 using namespace std;
 int main()
 {
-    string line;
-    while(getline(cin,line)){
-        //跳过空行
-        if(line.empty()) continue;
-        stringstream ss(line);
-        int n;
+    int n;
+    while (cin >> n) {
         double m;
-        ss >> n;
         double total=0.0;
         double max=-11100.0,min=11100.0;
-        while(ss>>m){
+        for (int i = 0; i < n && cin >> m; i++) {
             total += m;
             if(m>max) max=m;
             if(m<min) min=m;
