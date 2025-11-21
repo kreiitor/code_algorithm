@@ -17,6 +17,8 @@
 .vscode/
 Thumbs.db
 .DS_Store
+.tmp.driveupload/
+.tmp.drivedownload/
 
 # --- Latexmk build directories (optional) ---
 latex/build/
