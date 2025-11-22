@@ -6,6 +6,9 @@
 1 3 3 1
 1 4 6 4 1
 1 5 10 10 5 1
+1.把第i行和第i行向右平移一个单位的相加，就是下一行
+2.有递推结构，可以考虑使用动态规划
+3.动态规划一般而言都需要多一个值，用来处理开始时的边界处理
 
 
 Input  输入
@@ -23,31 +26,30 @@ Sample Output  示例输出
 1 2 1
 */
 #include <iostream>
-#include <string>
+#include <vector>
 #include <algorithm>
 using namespace std;
 
+
+
 int main() {
-    int n, r;
-    char num_bit[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    
-    while (cin >> n >> r) {
-        string s;
-        bool negative = (n < 0);
-        if (n < 0) n = -n;
-        
-        if (n == 0) {
-            s = "0";
-        } else {
-            while (n) {
-                s.push_back(num_bit[n % r]);
-                n /= r;
+    int n,count=0;
+    while(cin >> n){
+        if(count>0)cout<<endl;
+        vector<long long> dp(n+1,0);
+        dp[0]=0;
+        for(int i=1;i<=n;i++){
+            dp[i] = 1;
+            for(int j=i-1;j>=1;j--){
+                dp[j] = dp[j-1] + dp[j];
             }
-            reverse(s.begin(), s.end());
+            for(int j=1;j<=i;j++){
+                cout << dp[j];
+                if(j<i) cout << ' ';
+            }
+            cout << endl;
         }
-        
-        if (negative) cout << "-";
-        cout << s << endl;
+        count ++;
     }
     return 0;
 }
