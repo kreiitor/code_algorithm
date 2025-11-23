@@ -1,6 +1,8 @@
 /*
 求A^B的最后三位数表示的整数。
 说明：A^B的含义是“A的B次方”
+1。pow函数的输出是double类型，容易溢出导致结果错误
+2.因为只关心后三位数字，所以可以用后三位数字（模1000）不停的乘以A
  
 Input  输入
 输入数据包含多个测试实例，每个实例占一行，由两个正整数A和B组成（1<=A,B<=10000），如果A=0, B=0，则表示输入数据的结束，不做处理。
@@ -18,22 +20,22 @@ Sample Output  样本输出
 
 */
 #include <iostream>
+#include<algorithm>
+#include<cmath>
 using namespace std;
 
 int main() {
-    int T;
-    cin >> T;
-    while (T--) {
-        int ah, am, as, bh, bm, bs;
-        cin >> ah >> am >> as >> bh >> bm >> bs;
+    int m,n;
+    while(cin>>m>>n){
+        if(m==0 && n==0) break;
+        long long num = pow(m,n);
+        int result = 1;
+        for(int i=0;i<n;++i){
+            result = result * m %1000;
+        }
         
-        int tot_s = as + bs;
-        int tot_m = am + bm + tot_s / 60;
-        int tot_h = ah + bh + tot_m / 60;
-        
-        cout << tot_h << " "
-             << (tot_m % 60) << " "
-             << (tot_s % 60) << endl;
+        cout << result <<endl;
+
     }
     return 0;
 }
