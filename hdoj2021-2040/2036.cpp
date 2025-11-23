@@ -61,8 +61,6 @@ double calculate_polygon_area(const vector<Point>& coors) {
 }
 
 int main() {
-    // 设置 I/O 精度，确保能精确输出 0.5
-    // 注意：我们将精度提高到 10 位，以保证 0.5 能被准确输出，避免四舍五入到 0.0
     cout << fixed << setprecision(1); 
     
     int n_int;
