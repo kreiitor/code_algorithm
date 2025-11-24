@@ -3,6 +3,7 @@
 *.out
 *.o
 *.obj
+*.txt
 
 # --- LaTeX intermediate files ---
 *.aux
