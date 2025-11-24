@@ -14,6 +14,7 @@
 *.synctex.gz
 *.toc
 *.out
+*.bat
 
 # --- Editor and system files ---
 .vscode/
