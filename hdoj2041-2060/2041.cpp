@@ -1,60 +1,36 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+有一楼梯共M级，刚开始时你在第一级，若每次只能跨上一级或二级，要走上第M级，共有多少种走法？
+1.经典的动态规划问题，从大到小解题
 
+Input  输入
+输入数据首先包含一个整数N，表示测试实例的个数，然后是N行数据，每行包含一个整数M（1<=M<=40）,表示楼梯的级数。
+Output  输出
+对于每个测试实例，请输出不同走法的数量
+Sample Input  样本输入
+2
+2
+3
+Sample Output  样本输出
+1
+2
+*/
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include<vector>
 using namespace std;
 
 
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
-}
-
-
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
-}
-
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    int n;cin>>n;
+    int m;
+    for(int i=0;i<n && cin >> m;++i){
+        vector<int> dp(m+1,0);
+        dp[1]=1;
+        for(int j=2;j<=m;++j){
+            dp[j] = dp[j-1]+dp[j-2];
+        }
+        cout << dp[m] << endl;
+    }
+    return 0;
 }
