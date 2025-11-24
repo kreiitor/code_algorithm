@@ -1,37 +1,68 @@
 /*
-由于徐老汉没钱，收费员就将他的羊拿走一半，看到老汉泪水涟涟，犹豫了一下，又还给老汉一只。
-巧合的是，后面每过一个收费站，都是拿走当时羊的一半，然后退还一只，等到老汉到达市场，就只剩下3只羊了。
-你,当代有良知的青年，能帮忙算一下老汉最初有多少只羊吗？
+一般来说一个比较安全的密码至少应该满足下面两个条件：
+(1).密码长度大于等于8，且不要超过16。
+(2).密码中的字符应该来自下面“字符类别”中四组中的至少三组。
+这四个字符类别分别为：
+1.大写字母：A,B,C...Z;
+2.小写字母：a,b,c...z;
+3.数字：0,1,2...9;
+4.特殊符号：~,!,@,#,$,%,^;
+
+给你一个密码，你的任务就是判断它是不是一个安全的密码。
  
 
 Input  输入
-输入数据第一行是一个整数N，下面由N行组成，每行包含一个整数a(0<a<=30),表示收费站的数量。
+输入数据第一行包含一个数M，接下有M行，每行一个密码（长度最大可能为50），密码仅包括上面的四类字符。
 Output  输出
-对于每个测试实例，请输出最初的羊的数量,每个测试实例的输出占一行。
+对于每个测试实例，判断这个密码是不是一个安全的密码，是的话输出YES，否则输出NO。
 Sample Input  样本输入
-2
-1
-2
+3
+a1b2c3d4
+Linle@ACM
+^~^@^@!%
 Sample Output  样本输出
-4
-6
+NO
+YES
+NO
+
 */
 
 #include <iostream>
-#include<vector>
+#include<string>
+#include <cctype>
+
 using namespace std;
 
+int count_Character_Categories(const string& str)//动词开头的驼峰命名法
+{
+    bool hasUpper=false,hasLower=false,hasDigital=false,hasSpecial=false;
+    const std::string specialChars = "~!@#$%^";
+    for(char c:str){
+        if (std::isupper(static_cast<unsigned char>(c))) {
+            hasUpper = true;
+        } else if (std::islower(static_cast<unsigned char>(c))) {
+            hasLower = true;
+        } else if (std::isdigit(static_cast<unsigned char>(c))) {
+            hasDigital = true;
+        } else if (specialChars.find(c) != std::string::npos) {
+            hasSpecial = true;
+        }
+        //提前结束；
+        if (hasUpper && hasLower && hasDigital && hasSpecial) {
+            break;
+        }
+    }
+    return int(hasUpper + hasLower + hasDigital + hasSpecial);
+}
 
 int main()
 {
-    int n;cin>>n;
-    int a;
-    for(int j=0;j<n&&cin >> a;++j){
-        int m=3;
-        for(int i=0;i<a;++i){
-        m = 2*(m-1);
-        }
-        cout << m << endl;
+    int m;cin>>m;
+    string dummy;getline(cin,dummy);
+    string str;
+    for(int j=0;j<m&&getline(cin,str);++j){
+        bool flag = (str.length()>=8&&str.length()<=16) && count_Character_Categories(str)>=3;
+        cout << (flag?"YES":"NO") << endl;
     }
     
     
