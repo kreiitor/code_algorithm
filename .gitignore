@@ -4,6 +4,7 @@
 *.o
 *.obj
 *.txt
+*.py
 
 # --- LaTeX intermediate files ---
 *.aux
