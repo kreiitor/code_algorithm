@@ -1,60 +1,39 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+著名的RPG难题:
+有排成一行的ｎ个方格，用红(Red)、粉(Pink)、绿(Green)三色涂每个格子，每格涂一色，要求任何相邻的方格不能同色，
+且首尾两格也不同色．求全部的满足要求的涂法.
+1.别忘了首尾两格也不能重复
+Input
+输入数据包含多个测试实例,每个测试实例占一行,由一个整数N组成，(0<n<=50)。
+Output
+对于每个测试实例，请输出全部的满足要求的涂法，每个实例的输出占一行。
+Sample Input
+1
+2
+Sample Output
+3
+6
+*/
 
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include<vector>
 using namespace std;
 
-
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
+void arr_init( vector<long long> & arr){
+    arr[0]=3;arr[1]=3;arr[2]=6;arr[3]=6;
+    for(size_t i=4;i<arr.size();++i){
+        arr[i] = 2*arr[i-2]+arr[i-1];
+    }
+    return ;
 }
 
-
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
-}
-
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    int n;
+    vector<long long> arr(51,0);
+    arr_init(arr);
+    while(cin>>n){
+        cout<<arr[n]<<endl;
+    }
+    return 0;
 }
