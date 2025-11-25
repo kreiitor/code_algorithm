@@ -1,60 +1,39 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+有一只经过训练的蜜蜂只能爬向右侧相邻的蜂房，不能反向爬行。请编程计算蜜蜂从蜂房a爬到蜂房b的可能路线数。
+其中，蜂房的结构如下所示(i只能到i+1,i+2)。
 
+1.可以知道，这个是动态规划，计dp[i]为从1到i的走法
+ 
 
-#include <bits/stdc++.h>
+Input
+输入数据的第一行是一个整数N,表示测试实例的个数，然后是N 行数据，每行包含两个整数a和b(0<a<b<50)。
+Output
+对于每个测试实例，请输出蜜蜂从蜂房a爬到蜂房b的可能路线数，每个实例的输出占一行。
+Sample Input
+2
+1 2
+3 6
+Sample Output
+1
+3
+*/
+
+#include <iostream>
+#include<vector>
 using namespace std;
 
 
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
-}
-
-
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
-}
-
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    int n;cin>>n;
+    int m;
+    for(int i=0;i<n && cin >> m;++i){
+        vector<int> dp(m+1,0);
+        dp[1]=1;
+        for(int j=2;j<=m;++j){
+            dp[j] = dp[j-1]+dp[j-2];
+        }
+        cout << dp[m] << endl;
+    }
+    return 0;
 }
