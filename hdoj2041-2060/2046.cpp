@@ -1,60 +1,42 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+在2×n的一个长方形方格中,用一个1× 2的骨牌铺满方格,输入n ,输出铺放方案的总数.
+例如n=3时,为2× 3方格，骨牌的铺放方案有三种,如下图：
+1.类似斐波那契数列。多一个列就相当于，竖放这个列就是dp[n-1]，另外就是横放，就是另外占据一列，剩下n-2列dp[n-2]
 
+Input
+输入数据由多行组成，每行包含一个整数n,表示该测试实例的长方形方格的规格是2×n (0<n<=50)。
+Output
+对于每个测试实例，请输出铺放方案的总数，每个实例的输出占一行。
+Sample Input
+1
+3
+2
+Sample Output
+1
+3
+2
+*/
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include<vector>
 using namespace std;
 
-
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
+void init(vector<long long> & dp){
+    dp[0]=0;dp[1]=1;dp[2]=2;
+    for(int i=3;i<=50;++i){
+        dp[i] = dp[i-1]+dp[i-2];
+    }
+    return;
 }
 
 
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
-}
-
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    int n;
+    vector<long long> dp(51,0);
+    init(dp);
+    while(cin >> n){
+        cout<<dp[n] << endl;
+    }
+    return 0;
 }
