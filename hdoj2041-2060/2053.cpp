@@ -1,60 +1,57 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+There are many lamps in a line. All of them are off at first.
+ A series of operations are carried out on these lamps. 
+ On the i-th operation, the lamps whose numbers are the multiple of i change the condition
+( on to off and off to on ).
+1.只有为i倍数的时候才会变化，那也就是说，只有n因数的时候会变化，而且只会0/1变化
+2.只用求出来因数个数即可
 
+Input
+Each test case contains only a number n ( 0< n<= 10^5) in a line.
+Output
+Output the condition of the n-th lamp after infinity operations ( 0 - off, 1 - on ).
+Sample Input
+1
+5
+Sample Output
+1
+0
 
-#include <bits/stdc++.h>
+Consider the second test case:
+
+The initial condition	   : 0 0 0 0 0 …
+After the first operation  : 1 1 1 1 1 …
+After the second operation : 1 0 1 0 1 …
+After the third operation  : 1 0 0 0 1 …
+After the fourth operation : 1 0 0 1 1 …
+After the fifth operation  : 1 0 0 1 0 …
+
+The later operations cannot change the condition of the fifth lamp any more. So the answer is 0.
+*/
+#include <iostream>
+#include<vector>
+#include<algorithm>
+
+int countFactorNumber(int n){
+    if(n==1) return 1;
+    int num=0;
+    bool flag=false;//用来标识是否n为完全平方数
+    for(int i=2;i*i<=n;++i){
+        if(n%i==0){
+            ++num;
+            if(i*i==n) flag=true;
+        }
+    }
+    return (flag)?(2*num+1):(2*num+2);
+}
+
 using namespace std;
 
-
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
-}
-
-
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
-}
-
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    int n;
+    while(cin >> n){
+        cout << ((countFactorNumber(n)%2==0)?0:1) << endl;
+    }
+    return 0;
 }
