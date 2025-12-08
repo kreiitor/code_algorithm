@@ -1,60 +1,77 @@
-// template.cpp
-// 常用竞赛模板（C++17）
-// 作者：your-name
-// 说明：将 solve() 中代码替换为每道题目的实现。
+/*
+There must be many A + B problems in our HDOJ , now a new one is coming.
+Give you two hexadecimal long longegers , your task is to calculate the sum of them,and prlong long it in hexadecimal too.
+Easy ? AC it !
+1.如果想借助标准函数的话，可以直接使用stoll(a,nullptr,16)，将十六进制转换为longlong十进制，然后使用cout << '+/-' << hex << sum << endl;
+2.然后使用cout << '+/-' << hex << sum << endl;进行输出
 
+Input
+The input contains several test cases, please process to the end of the file.
+Each case consists of two hexadecimal long longegers A and B in a line seperated by a blank.
+The length of A and B is less than 15.
+Output
+For each test case,prlong long the sum of A and B in hexadecimal in one line.
+Sample Input
++A -A
++1A 12
+1A -9
+-1A -12
+1A -AA
+Sample Output
+0
+2C
+11
+-2C
+-90
+*/
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<cmath>
 using namespace std;
 
-
-// 常用别名
-using ll = long long;
-using ull = unsigned long long;
-using vi = vector<int>;
-using pii = pair<int,int>;
-
-
-// 常用常数
-const int INF = 0x3f3f3f3f;
-const ll LINF = (ll)4e18;
-
-
-// 快速读入（当需要超大输入时可用）
-static inline void fast_io(){
-ios::sync_with_stdio(false);
-cin.tie(nullptr);
+pair<bool,long long> todecimal(string str){
+    string num_bit = "0123456789ABCDEF";
+    long long len = str.length(),num=0;
+    bool is_positive = true;
+    for(long long i=0;i<=len-1;++i){
+        if(str[i]==' ') continue;
+        if(str[i]=='-'){
+            is_positive = false;
+        }else if(str[i]=='+'){
+            is_positive = true;
+        }else{
+        num = num*16 + (long long)num_bit.find(str[i]);
+        }
+    }
+    return {is_positive,num};
 }
 
-
-// 模板入口：把每道题的逻辑放在 solve() 内
-void solve(){
-// 示例：读入 n，然后 n 行区间，贪心按结束时间排序
-int n;
-while (cin >> n) {
-if (n == 0) return; // 根据题意结束
-vector<pair<int,int>> a;
-for (int i = 0; i < n; ++i) {
-int s,e; cin >> s >> e;
-a.emplace_back(e, s);
-}
-sort(a.begin(), a.end());
-int cnt = 0;
-int last_end = INT_MIN;
-for (auto &p : a) {
-int end = p.first, start = p.second;
-if (start >= last_end) {
-++cnt;
-last_end = end;
-}
-}
-cout << cnt << '\n';
-}
+string tohexadecimal(long long n){
+    bool is_positive = (n>=0);
+    n = abs(n);
+    if(n==0) return "0";
+    string res,num_bit = "0123456789ABCDEF";
+    while(n){
+        res.push_back(num_bit[n%16]);n/=16;
+    }
+    if(!is_positive) res.push_back('-');
+    reverse(res.begin(),res.end());
+    return res;
 }
 
-
-int main(){
-fast_io();
-solve();
-return 0;
+int main()
+{
+    string a,b;
+    pair<bool,long long> a_,b_;
+    long long res;
+    while(cin>>a>>b){
+        a_=todecimal(a);b_=todecimal(b);
+        long long a_int = (a_.first)?a_.second:-a_.second,b_int=(b_.first)?b_.second:-b_.second;
+        res = a_int + b_int;
+        cout << tohexadecimal(res) << endl;
+    }
+    return 0;
 }
