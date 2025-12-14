@@ -16,6 +16,7 @@
 *.out
 *.bat
 
+test.*
 # --- Editor and system files ---
 .vscode/
 Thumbs.db
